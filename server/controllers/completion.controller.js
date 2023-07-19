@@ -112,12 +112,12 @@ export async function completion(req, res) {
         if (match && match[1]) {
           res.status(200).json({ code: match[1] });
         } else {
-          // return as-is
-          // TODO: try to remove { "code" : " && "}
-          res
-            .status(200)
-            .json({ code: responseMessage.function_call.arguments });
-          throw new Error('Invalid');
+          // return as-is with { "code": " "}  removed
+          res.status(200).json({
+            code: responseMessage.function_call.arguments
+              .replace(/^\{\s*"code":\s*"/, '')
+              .replace(/"\s*\}$/, '')
+          });
         }
       }
     }
