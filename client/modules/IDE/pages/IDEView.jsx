@@ -152,6 +152,8 @@ class IDEView extends React.Component {
     clearTimeout(this.autosaveInterval);
     this.autosaveInterval = null;
   }
+
+  /* eslint-disable react/sort-comp */
   handleGlobalKeydown(e) {
     // 83 === s
     if (
@@ -248,6 +250,21 @@ class IDEView extends React.Component {
     this.props.updateFileContent(file.id, file.content);
   };
 
+  setFileContent = (content) => {
+    this.cmController.setContent(content);
+    this.syncFileContent();
+  };
+
+  undo = () => {
+    this.cmController.undo();
+    this.syncFileContent();
+  };
+
+  redo = () => {
+    this.cmController.redo();
+    this.syncFileContent();
+  };
+
   render() {
     return (
       <RootPage>
@@ -261,8 +278,12 @@ class IDEView extends React.Component {
         />
         <Toolbar
           syncFileContent={this.syncFileContent}
+          setFileContent={this.setFileContent}
+          undo={this.undo}
+          redo={this.redo}
           key={this.props.project.id}
         />
+
         {this.props.ide.preferencesIsVisible && (
           <Overlay
             title={this.props.t('Preferences.Settings')}
@@ -295,6 +316,7 @@ class IDEView extends React.Component {
             />
           </Overlay>
         )}
+
         <main className="editor-preview-container">
           <SplitPane
             split="vertical"
@@ -320,6 +342,7 @@ class IDEView extends React.Component {
               openUploadFileModal={this.props.openUploadFileModal}
               closeUploadFileModal={this.props.closeUploadFileModal}
             />
+
             <SplitPane
               split="vertical"
               defaultSize="50%"

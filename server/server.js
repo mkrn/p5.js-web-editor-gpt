@@ -17,6 +17,7 @@ import config from '../webpack/config.dev';
 
 // Import all required modules
 import api from './routes/api.routes';
+import completions from './routes/completion.routes';
 import users from './routes/user.routes';
 import sessions from './routes/session.routes';
 import projects from './routes/project.routes';
@@ -135,6 +136,7 @@ app.use(Express.static(path.resolve(__dirname, '../public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/editor', requestsOfTypeJSON(), users);
+app.use('/editor', requestsOfTypeJSON(), completions);
 app.use('/editor', requestsOfTypeJSON(), sessions);
 app.use('/editor', requestsOfTypeJSON(), files);
 app.use('/editor', requestsOfTypeJSON(), projects);

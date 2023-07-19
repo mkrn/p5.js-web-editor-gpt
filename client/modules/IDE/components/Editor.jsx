@@ -92,6 +92,9 @@ class Editor extends React.Component {
     this.showFind = this.showFind.bind(this);
     this.showReplace = this.showReplace.bind(this);
     this.getContent = this.getContent.bind(this);
+    this.setContent = this.setContent.bind(this);
+    this.undo = this.undo.bind(this);
+    this.redo = this.redo.bind(this);
   }
 
   componentDidMount() {
@@ -210,7 +213,10 @@ class Editor extends React.Component {
       tidyCode: this.tidyCode,
       showFind: this.showFind,
       showReplace: this.showReplace,
-      getContent: this.getContent
+      getContent: this.getContent,
+      setContent: this.setContent,
+      undo: this.undo,
+      redo: this.redo
     });
   }
 
@@ -337,8 +343,21 @@ class Editor extends React.Component {
     return updatedFile;
   }
 
+  setContent = (content) => {
+    this._cm.doc.setValue(content);
+  };
+
   showFind() {
     this._cm.execCommand('findPersistent');
+  }
+
+  undo() {
+    console.log('UNDOIN');
+    this._cm.execCommand('undo');
+  }
+
+  redo() {
+    this._cm.execCommand('redo');
   }
 
   showHint(_cm) {

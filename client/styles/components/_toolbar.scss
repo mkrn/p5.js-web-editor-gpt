@@ -57,6 +57,18 @@
 	}
 }
 
+.toolbar__undo-button {
+	font-size: 22px;
+}
+
+.toolbar__redo-button {
+	font-size: 22px;
+}
+
+.toolbar__model-select {
+	margin: 0 10px;
+}
+
 .toolbar__preferences-button {
 	@include themify() {
 		@extend %toolbar-button;
